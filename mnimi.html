@@ -1,0 +1,95 @@
+<!doctype html>
+<head>
+	<title>Συγκεντρώσου</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		.koumpipisw {position:absolute;width:65px; height:65px; 
+			background-color:teal; font-size:60px; color:gold;
+			font-family:"Georgia";align-items:center;visibility:visible;
+			 }
+			 #koumpinew {position:absolute;width:300px;height:50px;
+				 top:500px; left:150px;
+				 background-color:silver; font-size:25px; color:red;
+				 font-family:"Helvetica";align-self:center;visibility:visible;}
+		</style>
+		<script>
+			function arxikospinakas() {
+				alphabito="ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ";
+				for (i=0;i<24;i++) {
+						pinakas[2*i]=pinakas[2*i+1]=alphabito[i];
+			}
+		}
+			function shuffle(array) {
+				// http://stackoverflow.com/questions/962802#962890
+  var tmp, current, top = array.length;
+  if(top) while(--top) {
+    current = Math.floor(Math.random() * (top + 1));
+    tmp = array[current];
+    array[current] = array[top];
+    array[top] = tmp;
+  }
+  return array;
+}
+/* deikse: the original, simple version
+			function deikse(x) {
+				n=parseInt(x.id.substring(6));
+				x.value=pinakas[n];	
+			} */
+		
+			function deikse(x) {
+				x.disabled=true;
+				n=parseInt(x.id.substring(6));
+				x.value=pinakas[n];
+				yidx=('koumpi'+prwto).toString();
+				y=document.getElementById(yidx);
+				zidx=('koumpi'+deutero).toString();
+				z=document.getElementById(zidx);
+				if (prwto==-1) { //prwto gramma
+					prwto=n;
+				} else { //deutero gramma
+					if (deutero==-1) {
+						deutero=n;
+						if (x.value===y.value) {
+							swsto=1; ola++;
+							x.style.backgroundColor=y.style.backgroundColor='white';
+							x.style.color=y.style.color='green';
+							if (ola==24) {
+								mhnyma="ΜΠΡΑΒΟ ΤΑ ΚΑΤΑΦΕΡΕΣ ΣΥΓΧΑΡΗΤΗΡΙΑ ΠΑΡΑ ΠΟΛΥ ΩΡΑΙΑ";
+								for (i=0; i<48; i++) {
+									document.getElementById('koumpi'+i).value=mhnyma[i];
+								}
+							}
+						}
+					} else { //trito gramma
+						if (swsto==0) { 
+						y.value="";z.value="";
+						y.disabled=false;z.disabled=false;}else{
+							swsto=0;
+							}
+						prwto=n;deutero=-1;
+					}
+				}
+			}
+		function arxikhpisw() {
+			for (var i=0; i<6; i++) {
+				for (var j=0; j<8; j++) {
+					idnum=i*8+j;
+					idstring="koumpi"+idnum.toString();
+					document.write("<input type='button' class='koumpipisw' id="+idstring+" onclick='deikse(this);'>");
+					document.getElementById(idstring).style.top=i*70+20+"px";
+					document.getElementById(idstring).style.left=j*70+20+"px";
+				}
+		}
+	}
+		</script>
+	</head>
+<body>
+	<script>
+		pinakas=[];prwto=-1;deutero=-1;swsto=0;ola=0;
+		arxikospinakas();
+		pinakas=shuffle(pinakas);
+		arxikhpisw();
+	</script>
+	<input type="button" id="koumpinew" value="Ξανά από την αρχή!" onclick="window.location = window.location;">
+	</body>
+	</html>
